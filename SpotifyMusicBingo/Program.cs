@@ -6,8 +6,8 @@ using Newtonsoft.Json.Linq;
 
 class Program
 {
-    private const string ClientId = "your_spotify_dev_app_client_id";
-    private const string ClientSecret = "your_spotify_dev_app_client_secret";
+    //create a spotify dev app at https://developer.spotify.com/
+
 
     static async Task Main()
     {
