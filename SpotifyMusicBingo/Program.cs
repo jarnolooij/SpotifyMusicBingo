@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 
 class Program
 {
+    //created by Jarno Looij
     //create a spotify dev app at https://developer.spotify.com/
 
 
