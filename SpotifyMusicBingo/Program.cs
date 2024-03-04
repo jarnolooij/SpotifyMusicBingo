@@ -100,7 +100,7 @@ class Program
         const int cardsCount = 30;
         const int rows = 5;
         const int columns = 5;
-        var fileName = $"{playlistName}BingoCards.pdf";
+        var fileName = $"{playlistName} Bingo Cards.pdf";
 
         if (trackNames.Length < rows * columns)
         {
@@ -126,15 +126,17 @@ class Program
     static void DrawBingoCard(iText.Layout.Document document, string[] trackNames, int rows, int columns, string playlistName, int cardNum)
     {
         const int cellWidth = 100;
-        const int cellHeight = 50;
+        const int cellHeight = 100;
         const int headerFontSize = 24;
         const int subheaderFontSize = 16;
-        const float spacingAfterSubheader = 20f;
+        const float spacingAfterSubheader = 75f;
+        const float spacingBeforeheader = 50f;
 
         var shuffledTracks = trackNames.OrderBy(x => Guid.NewGuid()).ToArray();
 
         var headerParagraph = new Paragraph(playlistName)
             .SetTextAlignment(TextAlignment.CENTER)
+            .SetMarginTop(spacingBeforeheader)
             .SetFontSize(headerFontSize);
         document.Add(headerParagraph);
 
@@ -142,7 +144,7 @@ class Program
             .SetTextAlignment(TextAlignment.CENTER)
             .SetFontSize(subheaderFontSize);
         document.Add(subheaderParagraph);
-        \
+
         document.Add(new Paragraph().SetMarginBottom(spacingAfterSubheader));
 
         document.Add(new Paragraph());
@@ -163,6 +165,7 @@ class Program
                         .SetWidth(cellWidth)
                         .SetHeight(cellHeight)
                         .SetTextAlignment(TextAlignment.CENTER)
+                        .SetVerticalAlignment(VerticalAlignment.MIDDLE)
                         .SetFontSize(10)
                         .Add(new Paragraph(trackName))
                         .SetBorder(new SolidBorder(ColorConstants.BLACK, 1));
