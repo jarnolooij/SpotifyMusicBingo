@@ -1,5 +1,7 @@
-﻿using iText.Kernel.Pdf;
+﻿using iText.Kernel.Colors;
+using iText.Kernel.Pdf;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Newtonsoft.Json.Linq;
@@ -113,7 +115,7 @@ class Program
 
             for (int cardNumber = 1; cardNumber <= cardsCount; cardNumber++)
             {
-                DrawBingoCard(document, trackNames, rows, columns);
+                DrawBingoCard(document, trackNames, rows, columns, playlistName);
                 document.Add(new AreaBreak());
             }
 
@@ -121,13 +123,29 @@ class Program
         }
     }
 
-    static void DrawBingoCard(Document document, string[] trackNames, int rows, int columns)
+    static void DrawBingoCard(iText.Layout.Document document, string[] trackNames, int rows, int columns, string playlistName)
     {
         const int cellWidth = 100;
         const int cellHeight = 50;
         const int margin = 20;
+        const int headerFontSize = 24;
+        const int subheaderFontSize = 16;
 
         var shuffledTracks = trackNames.OrderBy(x => Guid.NewGuid()).ToArray();
+
+        var headerParagraph = new Paragraph("Bingo")
+            .SetTextAlignment(TextAlignment.CENTER)
+            .SetFontSize(headerFontSize);
+        document.Add(headerParagraph);
+
+        var subheaderParagraph = new Paragraph(playlistName)
+            .SetTextAlignment(TextAlignment.CENTER)
+            .SetFontSize(subheaderFontSize);
+        document.Add(subheaderParagraph);
+
+        document.Add(new Paragraph());
+
+        Table table = new Table(columns, false);
 
         for (int row = 0; row < rows; row++)
         {
@@ -139,17 +157,19 @@ class Program
                 {
                     string trackName = shuffledTracks[index];
 
-                    var paragraph = new Paragraph(trackName)
+                    Cell cell = new Cell()
                         .SetWidth(cellWidth)
                         .SetHeight(cellHeight)
-                        .SetMarginLeft(margin + (col * cellWidth))
-                        .SetMarginTop(margin + (row * cellHeight))
                         .SetTextAlignment(TextAlignment.CENTER)
-                        .SetFontSize(10);
+                        .SetFontSize(10)
+                        .Add(new Paragraph(trackName))
+                        .SetBorder(new SolidBorder(ColorConstants.BLACK, 1));
 
-                    document.Add(paragraph);
+                    table.AddCell(cell);
                 }
             }
         }
+
+        document.Add(table);
     }
 }
