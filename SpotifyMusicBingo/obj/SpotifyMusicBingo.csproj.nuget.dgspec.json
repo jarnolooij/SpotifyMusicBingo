@@ -48,6 +48,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "PDFsharp": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "itext7": {
+              "target": "Package",
+              "version": "[7.1.9, )"
             }
           },
           "imports": [

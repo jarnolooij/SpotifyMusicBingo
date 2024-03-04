@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using Newtonsoft.Json.Linq;
+using System.Reflection.Metadata;
+using Document = iText.Layout.Document;
 
 class Program
 {
@@ -25,13 +27,15 @@ class Program
 
         if (accessToken != null)
         {
-            string[] trackNames = await GetPlaylistTracks(accessToken, playlistId);
+            (string[] trackNames, string playlistName) = await GetPlaylistDetails(accessToken, playlistId);
 
-            Console.WriteLine("\nPlaylist Tracks:");
+            Console.WriteLine($"\nPlaylist Tracks for {playlistName}:");
             foreach (var trackName in trackNames)
             {
                 Console.WriteLine(trackName);
             }
+
+            GenerateBingoCards(trackNames, playlistName);
         }
         else
         {
@@ -39,7 +43,7 @@ class Program
         }
     }
 
-    private static async Task<string> GetAccessToken(string clientId, string clientSecret)
+    static async Task<string> GetAccessToken(string clientId, string clientSecret)
     {
         using (var httpClient = new HttpClient())
         {
@@ -67,18 +71,85 @@ class Program
         }
     }
 
-    private static async Task<string[]> GetPlaylistTracks(string accessToken, string playlistId)
+    static async Task<(string[], string)> GetPlaylistDetails(string accessToken, string playlistId)
     {
         using (var httpClient = new HttpClient())
         {
             httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-            var response = await httpClient.GetStringAsync($"https://api.spotify.com/v1/playlists/{playlistId}/tracks");
-            var jsonResponse = JObject.Parse(response);
+
+            var playlistResponse = await httpClient.GetStringAsync($"https://api.spotify.com/v1/playlists/{playlistId}");
+            var playlistJson = JObject.Parse(playlistResponse);
+
+            string playlistName = playlistJson["name"].ToString();
+
+            var tracksResponse = await httpClient.GetStringAsync($"https://api.spotify.com/v1/playlists/{playlistId}/tracks");
+            var jsonResponse = JObject.Parse(tracksResponse);
+
             string[] trackNames = jsonResponse["items"]
                 .Select(item => item["track"]["name"].ToString())
                 .ToArray();
 
-            return trackNames;
+            return (trackNames, playlistName);
+        }
+    }
+
+    static void GenerateBingoCards(string[] trackNames, string playlistName)
+    {
+        const int cardsCount = 30;
+        const int rows = 5;
+        const int columns = 5;
+        var fileName = $"{playlistName}BingoCards.pdf";
+
+        if (trackNames.Length < rows * columns)
+        {
+            Console.WriteLine("Not enough songs for a bingo card. Please add more songs to your playlist.");
+            return;
+        }
+
+        using (var writer = new PdfWriter(fileName))
+        using (var pdf = new PdfDocument(writer))
+        {
+            var document = new Document(pdf);
+
+            for (int cardNumber = 1; cardNumber <= cardsCount; cardNumber++)
+            {
+                DrawBingoCard(document, trackNames, rows, columns);
+                document.Add(new AreaBreak());
+            }
+
+            Console.WriteLine($"All bingo cards generated successfully. Check {fileName}");
+        }
+    }
+
+    static void DrawBingoCard(Document document, string[] trackNames, int rows, int columns)
+    {
+        const int cellWidth = 100;
+        const int cellHeight = 50;
+        const int margin = 20;
+
+        var shuffledTracks = trackNames.OrderBy(x => Guid.NewGuid()).ToArray();
+
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < columns; col++)
+            {
+                int index = (row * columns) + col;
+
+                if (index < shuffledTracks.Length)
+                {
+                    string trackName = shuffledTracks[index];
+
+                    var paragraph = new Paragraph(trackName)
+                        .SetWidth(cellWidth)
+                        .SetHeight(cellHeight)
+                        .SetMarginLeft(margin + (col * cellWidth))
+                        .SetMarginTop(margin + (row * cellHeight))
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFontSize(10);
+
+                    document.Add(paragraph);
+                }
+            }
         }
     }
 }
