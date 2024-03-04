@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SpotifyMusicBingo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5149a28ffdb15eeb5210a10f24eb48555843df23")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+017033a2167879688510a4ddc9bdf74791ffb69b")]
 [assembly: System.Reflection.AssemblyProductAttribute("SpotifyMusicBingo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SpotifyMusicBingo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

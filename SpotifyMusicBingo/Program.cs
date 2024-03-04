@@ -4,8 +4,8 @@ using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
-using System.Reflection.Metadata;
 using Document = iText.Layout.Document;
 
 class Program
@@ -115,7 +115,7 @@ class Program
 
             for (int cardNumber = 1; cardNumber <= cardsCount; cardNumber++)
             {
-                DrawBingoCard(document, trackNames, rows, columns, playlistName);
+                DrawBingoCard(document, trackNames, rows, columns, playlistName, cardNumber);
                 document.Add(new AreaBreak());
             }
 
@@ -123,25 +123,27 @@ class Program
         }
     }
 
-    static void DrawBingoCard(iText.Layout.Document document, string[] trackNames, int rows, int columns, string playlistName)
+    static void DrawBingoCard(iText.Layout.Document document, string[] trackNames, int rows, int columns, string playlistName, int cardNum)
     {
         const int cellWidth = 100;
         const int cellHeight = 50;
-        const int margin = 20;
         const int headerFontSize = 24;
         const int subheaderFontSize = 16;
+        const float spacingAfterSubheader = 20f;
 
         var shuffledTracks = trackNames.OrderBy(x => Guid.NewGuid()).ToArray();
 
-        var headerParagraph = new Paragraph("Bingo")
+        var headerParagraph = new Paragraph(playlistName)
             .SetTextAlignment(TextAlignment.CENTER)
             .SetFontSize(headerFontSize);
         document.Add(headerParagraph);
 
-        var subheaderParagraph = new Paragraph(playlistName)
+        var subheaderParagraph = new Paragraph($"Bingo Card {cardNum}")
             .SetTextAlignment(TextAlignment.CENTER)
             .SetFontSize(subheaderFontSize);
         document.Add(subheaderParagraph);
+        \
+        document.Add(new Paragraph().SetMarginBottom(spacingAfterSubheader));
 
         document.Add(new Paragraph());
 
