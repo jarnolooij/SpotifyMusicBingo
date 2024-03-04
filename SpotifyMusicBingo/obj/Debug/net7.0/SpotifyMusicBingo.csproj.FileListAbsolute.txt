@@ -1,0 +1,17 @@
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\bin\Debug\net7.0\SpotifyMusicBingo.exe
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\bin\Debug\net7.0\SpotifyMusicBingo.deps.json
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\bin\Debug\net7.0\SpotifyMusicBingo.runtimeconfig.json
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\bin\Debug\net7.0\SpotifyMusicBingo.dll
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\bin\Debug\net7.0\SpotifyMusicBingo.pdb
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.GeneratedMSBuildEditorConfig.editorconfig
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.AssemblyInfoInputs.cache
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.AssemblyInfo.cs
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.csproj.CoreCompileInputs.cache
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.dll
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\refint\SpotifyMusicBingo.dll
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.pdb
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.genruntimeconfig.cache
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\ref\SpotifyMusicBingo.dll
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\bin\Debug\net7.0\Newtonsoft.Json.dll
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.csproj.AssemblyReference.cache
+E:\GithubRepo\SpotifyMusicBingo\SpotifyMusicBingo\obj\Debug\net7.0\SpotifyMusicBingo.csproj.CopyComplete

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Yz0JnNTtbogDTg3rXjENJX/A+qQ6HNOe3u8dXmOb4dHz2PUlH9VqLQJhuUzdeVlR+5VOvTN6yYPhjhDXOE9jpA==",
+  "success": true,
+  "projectFilePath": "E:\\GithubRepo\\SpotifyMusicBingo\\SpotifyMusicBingo\\SpotifyMusicBingo.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jarno Looij\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
