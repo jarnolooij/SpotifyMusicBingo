@@ -1,4 +1,5 @@
-﻿using iText.Kernel.Colors;
+﻿using iText.IO.Util;
+using iText.Kernel.Colors;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Borders;
@@ -6,6 +7,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 using Document = iText.Layout.Document;
 
 class Program
@@ -13,7 +15,8 @@ class Program
     //created by Jarno Looij
     //create a spotify dev app at https://developer.spotify.com/
 
-
+    private const string ClientId = "your_spotify_dev_app_client_id";
+    private const string ClientSecret = "your_spotify_dev_app_client_secret";
     static async Task Main()
     {
         Console.Write("Enter the Spotify Playlist ID: ");
@@ -100,7 +103,7 @@ class Program
         const int cardsCount = 30;
         const int rows = 5;
         const int columns = 5;
-        var fileName = $"{playlistName} Bingo Cards.pdf";
+        var fileName = $"{playlistRegexConverter(playlistName)} Bingo Cards.pdf";
 
         if (trackNames.Length < rows * columns)
         {
@@ -176,5 +179,13 @@ class Program
         }
 
         document.Add(table);
+    }
+
+    static string PlaylistRegexConverter(string playlistName)
+    {
+        string pattern = "[^a-zA-Z0-9_\\s\\-\\.]+";
+        string convertedName = Regex.Replace(playlistName, pattern, "");
+
+        return convertedName;
     }
 }
