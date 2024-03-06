@@ -41,3 +41,6 @@ The generated bingo cards will be available in the `BingoCards` folder.
 
 ## Peview Bingo Card:
 ![Preview](images/preview.png)
+
+## Licence:
+[![License: CC-BY-NC-ND](https://img.shields.io/badge/License-CC--BY--NC--ND-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
