@@ -19,6 +19,7 @@ class Program
 
     private const string ClientId = "your_spotify_dev_app_client_id";
     private const string ClientSecret = "your_spotify_dev_app_client_secret";
+
     static async Task Main()
     {
         Console.Write("Enter the Spotify Playlist ID: ");
@@ -27,6 +28,14 @@ class Program
         if (string.IsNullOrWhiteSpace(playlistId))
         {
             Console.WriteLine("Playlist ID cannot be empty. Exiting program.");
+            return;
+        }
+
+        bool isValidPlaylistId = await ValidatePlaylistId(playlistId);
+
+        if (!isValidPlaylistId)
+        {
+            Console.WriteLine("Invalid Playlist ID. Exiting program.");
             return;
         }
 
@@ -100,7 +109,7 @@ class Program
         }
     }
 
-    static void GenerateBingoCards(string[] trackNames, string playlistName)
+    static async void GenerateBingoCards(string[] trackNames, string playlistName)
     {
         const int cardsCount = 30;
         const int rows = 5;
@@ -119,22 +128,28 @@ class Program
             Console.WriteLine("Not enough songs for a bingo card. Please add more songs to your playlist.");
             return;
         }
-
-        using (var writer = new PdfWriter(outputPath))
-        using (var pdf = new PdfDocument(writer))
-        using (var document = new Document(pdf))
+        try
         {
-            DrawCheckerCard(document, trackNames, playlistName);
-
-            document.Add(new AreaBreak());
-
-            for (int cardNumber = 1; cardNumber <= cardsCount; cardNumber++)
+            using (var writer = new PdfWriter(outputPath))
+            using (var pdf = new PdfDocument(writer))
+            using (var document = new Document(pdf))
             {
-                DrawBingoCard(document, trackNames, rows, columns, playlistName, cardNumber);
-                document.Add(new AreaBreak());
-            }
+                DrawCheckerCard(document, trackNames, playlistName);
 
-            Console.WriteLine($"All bingo cards generated successfully. Check {outputPath}");
+                document.Add(new AreaBreak());
+
+                for (int cardNumber = 1; cardNumber <= cardsCount; cardNumber++)
+                {
+                    DrawBingoCard(document, trackNames, rows, columns, playlistName, cardNumber);
+                    document.Add(new AreaBreak());
+                }
+
+                Console.WriteLine($"All bingo cards generated successfully. Check {outputPath}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message.ToString(), "try again");
         }
     }
 
@@ -262,5 +277,14 @@ class Program
         string convertedName = Regex.Replace(playlistName, pattern, "");
 
         return convertedName;
+    }
+    static async Task<bool> ValidatePlaylistId(string playlistId)
+    {
+        using (var httpClient = new HttpClient())
+        {
+            var response = await httpClient.GetAsync($"https://api.spotify.com/v1/playlists/{playlistId}");
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }
