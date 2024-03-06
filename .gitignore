@@ -1,2 +1,4 @@
 
 *.vsidx
+*.cs
+*.cache
