@@ -36,6 +36,8 @@ When prompted, enter the Playlist ID. You can find the Playlist ID by taking the
 The generated bingo cards will be available in the `BingoCards` folder.
 
 ## Troubleshooting:
-
 - If you encounter any issues, ensure that your Spotify Developer App credentials are correctly configured.
 - Make sure the provided Playlist ID is valid.
+
+## Peview Bingo Card:
+![Preview](images/preview.png)
