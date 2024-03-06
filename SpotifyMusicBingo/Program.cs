@@ -124,6 +124,10 @@ class Program
         using (var pdf = new PdfDocument(writer))
         using (var document = new Document(pdf))
         {
+            DrawCheckerCard(document, trackNames, playlistName);
+
+            document.Add(new AreaBreak());
+
             for (int cardNumber = 1; cardNumber <= cardsCount; cardNumber++)
             {
                 DrawBingoCard(document, trackNames, rows, columns, playlistName, cardNumber);
@@ -131,6 +135,69 @@ class Program
             }
 
             Console.WriteLine($"All bingo cards generated successfully. Check {outputPath}");
+        }
+    }
+
+    static void DrawCheckerCard(iText.Layout.Document document, string[] trackNames, string playlistName)
+    {
+        const int cellWidth = 100;
+        const int cellHeight = 100;
+        const int headerFontSize = 24;
+        const float spacingAfterHeader = 25f;
+        const float spacingBeforeHeader = 25f;
+        const int columns = 5;
+        const int firstPageRows = 5;
+        const int secondPageRows = 7;
+
+        int trackIndex = 0;
+        int totalPages = (int)Math.Ceiling((double)trackNames.Length / (columns * firstPageRows));
+
+        for (int currentPage = 1; currentPage <= totalPages; currentPage++)
+        {
+            if (currentPage > 1)
+            {
+                document.Add(new AreaBreak());
+            }
+
+            if (currentPage == 1)
+            {
+                var headerParagraph = new Paragraph($"{playlistName} Bingo Checker Card")
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetMarginTop(spacingBeforeHeader)
+                    .SetFontSize(headerFontSize);
+
+                document.Add(headerParagraph);
+                document.Add(new Paragraph().SetMarginBottom(spacingAfterHeader));
+            }
+
+            int currentRows = (currentPage == 1) ? firstPageRows : secondPageRows;
+            Table table = new Table(UnitValue.CreatePercentArray(Enumerable.Repeat(1f, columns).ToArray())).UseAllAvailableWidth();
+
+            for (int row = 0; row < currentRows; row++)
+            {
+                for (int col = 0; col < columns; col++)
+                {
+                    if (trackIndex < trackNames.Length)
+                    {
+                        string trackName = trackNames[trackIndex];
+
+                        Cell cell = new Cell()
+                            .SetWidth(cellWidth)
+                            .SetHeight(cellHeight)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                            .SetFontSize(10)
+                            .Add(new Paragraph(trackName))
+                            .SetBorder(new SolidBorder(ColorConstants.BLACK, 1));
+
+                        table.AddCell(cell);
+
+                        trackIndex++;
+                    }
+                }
+            }
+
+            document.Add(table);
         }
     }
 
