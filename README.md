@@ -15,7 +15,7 @@ Before using this program, make sure you have the following:
 ### Clone the Repository:
 
 ```bash
-git clone https://github.com/yourusername/spotify-bingo-generator.git
+git clone https://github.com/jarnolooij/spotify-bingo-generator.git
 ```
 
 ## Update Spotify Developer Credentials:
