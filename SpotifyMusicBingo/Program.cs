@@ -103,7 +103,14 @@ class Program
         const int cardsCount = 30;
         const int rows = 5;
         const int columns = 5;
+        var outputFolder = "..\\..\\..\\BingoCards";
         var fileName = $"{PlaylistRegexConverter(playlistName)} Bingo Cards.pdf";
+        var outputPath = Path.Combine(Directory.GetCurrentDirectory(), outputFolder, fileName);
+
+        if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), outputFolder)))
+        {
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), outputFolder));
+        }
 
         if (trackNames.Length < rows * columns)
         {
@@ -111,18 +118,17 @@ class Program
             return;
         }
 
-        using (var writer = new PdfWriter(fileName))
+        using (var writer = new PdfWriter(outputPath))
         using (var pdf = new PdfDocument(writer))
+        using (var document = new Document(pdf))
         {
-            var document = new Document(pdf);
-
             for (int cardNumber = 1; cardNumber <= cardsCount; cardNumber++)
             {
                 DrawBingoCard(document, trackNames, rows, columns, playlistName, cardNumber);
                 document.Add(new AreaBreak());
             }
 
-            Console.WriteLine($"All bingo cards generated successfully. Check {fileName}");
+            Console.WriteLine($"All bingo cards generated successfully. Check {outputPath}");
         }
     }
 
