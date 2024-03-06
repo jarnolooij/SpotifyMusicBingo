@@ -12,8 +12,9 @@ using Document = iText.Layout.Document;
 
 class Program
 {
-    //created by Jarno Looij
-    //create a spotify dev app at https://developer.spotify.com/
+    //Created by Jarno Looij
+    //Create a spotify dev app at https://developer.spotify.com/
+    //Insert the last part (playlist id) of the url of a playlist into the console on runtime and press enter
 
     private const string ClientId = "your_spotify_dev_app_client_id";
     private const string ClientSecret = "your_spotify_dev_app_client_secret";
