@@ -34,6 +34,7 @@ When prompted, enter the Playlist ID. You can find the Playlist ID by taking the
 ## Check Output:
 
 The generated bingo cards will be available in the `BingoCards` folder.
+The output format is PDF
 
 ## Troubleshooting:
 - If you encounter any issues, ensure that your Spotify Developer App credentials are correctly configured.
