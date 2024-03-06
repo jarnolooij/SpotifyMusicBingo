@@ -103,7 +103,7 @@ class Program
         const int cardsCount = 30;
         const int rows = 5;
         const int columns = 5;
-        var fileName = $"{playlistRegexConverter(playlistName)} Bingo Cards.pdf";
+        var fileName = $"{PlaylistRegexConverter(playlistName)} Bingo Cards.pdf";
 
         if (trackNames.Length < rows * columns)
         {
